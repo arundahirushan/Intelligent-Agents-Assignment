@@ -33,7 +33,7 @@ description for details.
 
 Good luck and happy searching!
 """
-
+from itertools import permutations
 from typing import List, Tuple, Any
 from game import Directions
 from game import Agent
@@ -371,24 +371,32 @@ class CornersProblem(search.SearchProblem):
 
 
 def cornersHeuristic(state: Any, problem: CornersProblem):
-    """
-    A heuristic for the CornersProblem that you defined.
+    """Estimate the shortest corner-visiting route while ignoring walls."""
+    position, visited_corners = state
+    remaining_corners = []
 
-      state:   The current search state
-               (a data structure you chose in your search problem)
+    for index, corner in enumerate(problem.corners):
+        if not visited_corners[index]:
+            remaining_corners.append(corner)
 
-      problem: The CornersProblem instance for this layout.
+    if not remaining_corners:
+        return 0
 
-    This function should always return a number that is a lower bound on the
-    shortest path from the state to a goal of the problem; i.e.  it should be
-    admissible (as well as consistent).
-    """
-    corners = problem.corners  # These are the corner coordinates
-    # These are the walls of the maze, as a Grid (game.py)
-    walls = problem.walls
+    best_distance = float('inf')
 
-    "*** YOUR CODE HERE ***"
-    return 0  # Default to trivial solution
+    for order in permutations(remaining_corners):
+        total_distance = 0
+        current_position = position
+
+        for corner in order:
+            distance = util.manhattanDistance(current_position, corner)
+            total_distance += distance
+            current_position = corner
+
+        if total_distance < best_distance:
+            best_distance = total_distance
+
+    return best_distance
 
 
 class AStarCornersAgent(SearchAgent):
