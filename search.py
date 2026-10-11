@@ -100,52 +100,15 @@ def depthFirstSearch(problem: SearchProblem):
 
 
 def breadthFirstSearch(problem: SearchProblem):
-    """Find a route with the fewest moves using a queue."""
-    queue = util.Queue()
-    start_state = problem.getStartState()
-    queue.push((start_state, []))
-    visited = {start_state}
-
-    while not queue.isEmpty():
-        state, path = queue.pop()
-
-        if problem.isGoalState(state):
-            return path
-
-        for next_state, action, step_cost in problem.getSuccessors(state):
-            if next_state not in visited:
-                visited.add(next_state)
-                next_path = path + [action]
-                queue.push((next_state, next_path))
-
-    return []
+    """Search the shallowest nodes in the search tree first."""
+    "*** YOUR CODE HERE ***"
+    util.raiseNotDefined()
 
 
 def uniformCostSearch(problem: SearchProblem):
-    """Find a route with the lowest total cost using a priority queue."""
-    queue = util.PriorityQueue()
-    start_state = problem.getStartState()
-    queue.push((start_state, [], 0), 0)
-    best_cost = {start_state: 0}
-
-    while not queue.isEmpty():
-        state, path, cost = queue.pop()
-
-        if cost > best_cost[state]:
-            continue
-
-        if problem.isGoalState(state):
-            return path
-
-        for next_state, action, step_cost in problem.getSuccessors(state):
-            next_cost = cost + step_cost
-
-            if next_state not in best_cost or next_cost < best_cost[next_state]:
-                best_cost[next_state] = next_cost
-                next_path = path + [action]
-                queue.push((next_state, next_path, next_cost), next_cost)
-
-    return []
+    """Search the node of least total cost first."""
+    "*** YOUR CODE HERE ***"
+    util.raiseNotDefined()
 
 
 def nullHeuristic(state, problem=None):
@@ -157,32 +120,9 @@ def nullHeuristic(state, problem=None):
 
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
-    """Find a route using its cost so far plus an estimated remaining cost."""
-    queue = util.PriorityQueue()
-    start_state = problem.getStartState()
-    start_priority = heuristic(start_state, problem)
-    queue.push((start_state, [], 0), start_priority)
-    best_cost = {start_state: 0}
-
-    while not queue.isEmpty():
-        state, path, cost = queue.pop()
-
-        if cost > best_cost[state]:
-            continue
-
-        if problem.isGoalState(state):
-            return path
-
-        for next_state, action, step_cost in problem.getSuccessors(state):
-            next_cost = cost + step_cost
-
-            if next_state not in best_cost or next_cost < best_cost[next_state]:
-                best_cost[next_state] = next_cost
-                next_path = path + [action]
-                priority = next_cost + heuristic(next_state, problem)
-                queue.push((next_state, next_path, next_cost), priority)
-
-    return []
+    """Search the node that has the lowest combined cost and heuristic first."""
+    "*** YOUR CODE HERE ***"
+    util.raiseNotDefined()
 
 
 # Abbreviations
